@@ -1,0 +1,689 @@
+{
+"imagined": [
+{
+"n": 1,
+"gap": "원룸의 위치",
+"fill": "강 동쪽 주거지. 구역 이름은 쓰지 않는다. 전차로 가고, 걸어서 다리로 나갈 수 있다. 지도에는 점을 찍지 않는다",
+"show": "구역",
+"until": "폴란드어 원문에 위치 단서가 있을 때"
+},
+{
+"n": 2,
+"gap": "원룸 건물과 방",
+"fill": "1960년대 4층 공동주택의 맨 위층. 문, 짧은 복도, 방 하나, 벽에 붙은 가스레인지. 창은 둘이고 포플러 가지가 창 높이까지 차서 바깥을 가린다. 방은 약 20㎡",
+"show": "장면",
+"until": "1970–80년대 평면 자료가 있을 때"
+},
+{
+"n": 3,
+"gap": "M의 건물",
+"fill": "탐카 거리 언덕 위쪽의 전쟁 전 공동주택. 단독 빌라가 아니다. 창은 강 쪽을 향한다. 실제 조망보다 넓게 보이는 M의 창은 7장의 연출을 따른다",
+"show": "구역",
+"until": "원어가 단독 주택으로 확인될 때"
+},
+{
+"n": 4,
+"gap": "층수를 세는 법",
+"fill": "러시아어판 숫자를 기준으로 삼아 지상층을 1로 센다. M의 집과 화장실은 세 번째 층, 안나의 집은 다섯 번째 층으로 짓는다. 층수 표지는 숫자를 쓰지 않는다. ¶17과 ¶69의 \"2층\"은 인용문에서만 한국어판대로 쓴다",
+"show": "구역",
+"until": "폴란드어 원문의 층 표기를 볼 때"
+},
+{
+"n": 5,
+"gap": "안나의 건물",
+"fill": "지상층 위 2개 층으로 재건된 거리 건물 뒤에 선 5층 동. 블리클레의 실제 번지를 가리키지 않는 가상의 동이다. 발코니가 거리 건물의 지붕선 위로 트여 노비시비아트와 지붕, 안테나, 굴뚝, 지평선을 내려다본다",
+"show": "구역",
+"until": "노비시비아트 재건 도면이나 안뜰 사진이 있을 때"
+},
+{
+"n": 6,
+"gap": "블리클레 뒤 안뜰",
+"fill": "아치 통로를 지나면 네 변 길이가 다른 사각형 안뜰이 나온다. 원문의 놀이터, 벤치 두 개, 콘크리트 쓰레기통, 단풍나무, 스노베리를 그 안에 놓는다. 거리 쪽 한 면만 재건 건물의 뒷면이고 나머지 면은 별개의 건물이다",
+"show": "구역",
+"until": "안뜰 사진이나 현지 답사가 있을 때"
+},
+{
+"n": 7,
+"gap": "안나의 집 내부",
+"fill": "좁은 복도, 방, 작은 부엌, 안락의자는 원문을 따른다. 낡은 소파, 벽시계, 약병, 문가의 외출용 구두를 더한다",
+"show": "구역",
+"until": "비슷한 시기 노비시비아트 주택 내부 사진이 있을 때"
+},
+{
+"n": 8,
+"gap": "농성장 층 배치",
+"fill": "지상층에 출입문, 당직자 자리, 매점, 공중전화 두 대, 탁구대를 둔다. 그 위층에 강당, 흡연 복도, 게시판을 둔다. 맨 위 층에 탁자를 침대로 쓰는 강의실과 화장실을 둔다. 층 사이 계단참에 짧은 복도가 이어져 중2층을 이룬다. 이곳은 어둡다",
+"show": "구역",
+"until": "스타프키 건물 실측이나 평면이 있을 때"
+},
+{
+"n": 9,
+"gap": "연구소 뜨락",
+"fill": "문 밖의 작은 뜰. 앙상한 나무 몇 그루, 빈 자전거 거치대, 희미한 외등 하나",
+"show": "구역",
+"until": "1981년 사진이 있을 때"
+},
+{
+"n": 10,
+"gap": "파업의 진행",
+"fill": "한국어판의 \"교대식\"을 기준으로 삼는다. 파업은 수주간 이어졌고 마지막 주말에 형태가 바뀌었다고 가정한다. 화면에 날짜를 내지 않고, 열람실에도 달력이 아니라 이 가정 한 줄로만 싣는다",
+"show": "내부",
+"until": "파업 일지나 폴란드어 원문이 있을 때"
+},
+{
+"n": 11,
+"gap": "12월의 날씨",
+"fill": "초순에는 진눈깨비와 젖은 보도, 이어서 눈이 쌓인다. 12월 13일의 눈과 혹한은 기록을 따르고 [B], 그날 하늘은 한 자료가 말하는 맑음을 택한다 [C]",
+"show": "구역",
+"until": "IMGW 일별 자료가 있을 때"
+},
+{
+"n": 12,
+"gap": "분식집 '바퀴벌레'",
+"fill": "대학 뒤 골목으로 위치를 둔다. M의 창에 지점만 표시한다",
+"show": "구역",
+"until": "위치 자료가 있을 때"
+},
+{
+"n": 13,
+"gap": "도넛 가게",
+"fill": "마르흘레프스키 거리의 한 지점으로 둔다. M의 창에 지점만 표시한다",
+"show": "구역",
+"until": "위치 자료가 있을 때"
+},
+{
+"n": 14,
+"gap": "세탁실 클럽",
+"fill": "¶45의 클럽과 ¶79의 동네 클럽을 한 곳으로 합친다. 강 동쪽 공동주택의 지하 세탁실로, 시멘트 바닥과 배수구, 노출 배관 아래에 탁구대, 체스판, 카드, 십자말풀이 종이가 있다",
+"show": "구역",
+"until": "두 곳이 다르다는 근거가 나올 때"
+},
+{
+"n": 15,
+"gap": "아마토르스카 실내",
+"fill": "어두운 나무 벽, 작은 탁자, 입구의 외투걸이, 낮은 바. 창가 자리와 구석 자리는 원문을 따른다",
+"show": "구역",
+"until": "1981년 실내 사진이 있을 때"
+},
+{
+"n": 16,
+"gap": "시위 행렬의 장소",
+"fill": "크라코프스키에프셰드미에시치에의 대학 앞 구간. 거리에서는 파업 현수막이 읽히고, 안나의 5층에서는 행렬이 보이지 않고 외침만 흩어진다",
+"show": "구역",
+"until": "해당 장면의 기록이 있을 때"
+},
+{
+"n": 17,
+"gap": "서술자와 이고르의 집",
+"fill": "서술자의 집은 자멘호프 거리 1950년대 공동주택으로 두고 내부는 보여 주지 않는다. 이고르의 집은 부모와 사는 강 동쪽 아파트로, 유리장의 도자기와 레이스 깔개로 채운다",
+"show": "구역",
+"until": "비슷한 시기 주택 내부 사진이 있을 때"
+},
+{
+"n": 18,
+"gap": "고향 마을",
+"fill": "덧붙이는 지명 표기는 쓰지 않고 작은 마을로만 둔다. ¶99의 인용은 예외로 \"드레브니차\"를 쓰되, 러시아어판에는 마을 이름이 없다는 점을 열람실에 적는다. 기차로 몇 시간 걸리는 곳의 낮은 집 부엌이다. 낙엽송 가지와 집 앞을 쓰는 이웃은 원문을 따른다",
+"show": "장면",
+"until": "폴란드어 원문에서 대목을 확인할 때"
+},
+{
+"n": 19,
+"gap": "버스와 전차",
+"fill": "버스는 1970년대풍 굴절버스, 전차는 빨강과 크림색 2량 편성으로 짓는다. 제조사와 형식 이름은 쓰지 않는다. 배차 간격은 화면과 열람실에 수치로 내지 않는다",
+"show": "구역",
+"until": "1981년 차량 사진과 시간표가 있을 때"
+},
+{
+"n": 20,
+"gap": "공중전화 부스",
+"fill": "강 동쪽 대로의 전차 정류장 옆. 전화기가 응답하지 않고 전차가 오지 않는 두 대목이 한자리에서 이어진다",
+"show": "구역",
+"until": "해당 지점의 1981년 사진이 있을 때"
+},
+{
+"n": 21,
+"gap": "결말의 시점",
+"fill": "포니아토프스키 다리 상판의 서쪽 마지막 구간에 서서 이어지는 대로를 정면으로 본다. \"대로에서 봄\"과 \"다리 위에서 봄\" 두 번역이 함께 성립한다",
+"show": "장면",
+"until": "폴란드어 원문의 ¶231 대응 문장을 볼 때"
+},
+{
+"n": 22,
+"gap": "장갑차 행렬",
+"fill": "바퀴형 장갑차는 기록을 따른다 [B]. 대수는 6대, 세로 한 줄로 관람자 쪽으로 밀려온다. 병사의 얼굴은 보이지 않는다. 형식은 특정하지 않는다",
+"show": "구역",
+"until": "그날 사진이나 영상이 있을 때"
+},
+{
+"n": 23,
+"gap": "생활 사물",
+"fill": "전기난로, 공중전화, 담배, 신문, 머그잔은 1970년대풍으로 짓는다. 상표와 기사 내용은 쓰지 않는다",
+"show": "구역",
+"until": "사물 자료가 있을 때"
+},
+{
+"n": 24,
+"gap": "가을날의 빛",
+"fill": "안나 장면은 겨울 저녁이 기본이다. ¶177의 창가 확인만 낮은 가을 구름 사이의 햇빛으로 바꾼다. 원문의 가을은 [A]이고, 빛의 모양이 상상이다",
+"show": "구역",
+"until": "없음. 연출 선택이다"
+},
+{
+"n": 25,
+"gap": "기념비와 정류장",
+"fill": "정류장은 표지판과 얼어붙은 보도만 짓는다. 기념비는 어둠 속의 큰 윤곽으로만 두고 조각을 만들지 않는다. 게토 영웅 기념비라는 식별은 [C]이며 열람실에서만 말한다",
+"show": "구역",
+"until": "1981년 정류장 위치 자료가 있을 때"
+},
+{
+"n": 26,
+"gap": "역 승강장",
+"fill": "역 이름을 쓰지 않는다. 낮은 콘크리트 천장의 지하 승강장, 줄지어 바뀌는 행선지 전광판, 붉은 선, 어두운 초록 객차를 짓는다. 행선지는 원문의 도시만 쓴다. 파업 기간과의 관계는 정하지 않는다",
+"show": "구역",
+"until": "1981년 역 사진이 있을 때"
+},
+{
+"n": 27,
+"gap": "사스카켕파 거리",
+"fill": "나무가 늘어선 2–3층 주택가. 서술자가 돌보는 집은 특정하지 않는다",
+"show": "구역",
+"until": "1980년대 거리 사진이 있을 때"
+},
+{
+"n": 28,
+"gap": "보행 루프의 거리",
+"fill": "도로 선형은 지도를 따른다. 보도 판석, 난간, 대형 진열장의 세부는 상상이다",
+"show": "구역",
+"until": "1981년 거리 사진이 있을 때"
+},
+{
+"n": 29,
+"gap": "농성장의 사람과 소도구",
+"fill": "얼굴 없는 실루엣으로 둔다. 치릴이 끌려간 방은 복도 끝의 닫힌 문으로만 둔다. 구급차는 창 밖의 불빛으로만 보인다. 벽보는 글자가 읽히지 않는다",
+"show": "구역",
+"until": "학생 회고나 사진이 있을 때"
+},
+{
+"n": 30,
+"gap": "거리 정면",
+"fill": "도시 장면의 파사드는 지도 윤곽 위에 지은 벽면이다. 창의 배열과 색은 상상이다. 블리클레는 이름 없는 과자점 진열창으로 둔다",
+"show": "구역",
+"until": "재건 도면이나 거리 사진이 있을 때"
+},
+{
+"n": 31,
+"gap": "안나 건물의 계단실",
+"fill": "승강기 없는 좁은 계단. 층마다 창 하나와 어두운 층계참이 있다",
+"show": "구역",
+"until": "안뜰 답사가 있을 때"
+},
+{
+"n": 32,
+"gap": "버스 창밖",
+"fill": "군중과 차량은 어둠 속 실루엣이다. 가판대와 담배 상자의 소년은 원문을 따른다. 붉은 현수막의 \"파업\"만 읽히고 그 밖의 글자는 읽히지 않는다",
+"show": "구역",
+"until": "대학 정문의 파업 사진이 있을 때"
+},
+{
+"n": 33,
+"gap": "인물 외형",
+"fill": "모든 인물을 얼굴 없는 실루엣으로 짓는다. 체 게바라의 복장, 안나의 코트처럼 원문이 말하는 부분만 형태를 준다. 치릴은 소리와 뒷모습만 쓴다",
+"show": "구역",
+"until": "없음. 윤리 선택이다"
+},
+{
+"n": 34,
+"gap": "음악",
+"fill": "밥 말리 음악은 쓰지 않는다. 벽 너머의 먹먹한 2박 리듬으로 대신한다. 원문의 기타 소리도 합성음이다",
+"show": "내부",
+"until": "권리를 확보할 때"
+}
+],
+"sources": [
+{
+"id": "S1",
+"name": "TRASBUS, 바르샤바 대중교통 연표 111번",
+"urls": [
+"https://www.trasbus.com/liniabus111.htm"
+]
+},
+{
+"id": "S2",
+"name": "바르샤바대 심리학부 연혁, 1980–1989",
+"urls": [
+"http://psych.uw.edu.pl/o-nas/historia/czasy-solidarnosci-i-stanu-wojennego-lata-1980-1989/"
+]
+},
+{
+"id": "S3",
+"name": "바르샤바대, 계엄 선포 기념 회고",
+"urls": [
+"https://www.uw.edu.pl/rocznica-wprowadzenia-stanu-wojennego/"
+]
+},
+{
+"id": "S4",
+"name": "Umschlagplatz Monument (영문 위키백과)",
+"urls": [
+"https://en.wikipedia.org/wiki/Umschlagplatz_Monument"
+]
+},
+{
+"id": "S5",
+"name": "Umschlagplatz (영문 위키백과)",
+"urls": [
+"https://en.wikipedia.org/wiki/Umschlagplatz"
+]
+},
+{
+"id": "S6",
+"name": "바르샤바 게토 박물관, The Silent Eyewitness",
+"urls": [
+"https://1943.pl/en/artykul/the-silent-eyewitness-in-the-register-of-historical-monuments"
+]
+},
+{
+"id": "S7",
+"name": "USC Warsaw Ghetto 페이지",
+"urls": [
+"https://iwalk-dev.usc.edu/warszawa-ghetto-warszawa/warszawa-ghetto-warszawa-wall"
+]
+},
+{
+"id": "S9",
+"name": "Martial law in Poland (영문 위키백과)",
+"urls": [
+"https://en.wikipedia.org/wiki/Martial_law_in_Poland"
+]
+},
+{
+"id": "S10",
+"name": "폴란드 라디오, 계엄 39주년",
+"urls": [
+"https://polskieradio.pl/395/7784/artykul/2639386,poland-marks-39th-anniversary-of-imposition-of-martial-law"
+]
+},
+{
+"id": "S11",
+"name": "OSA 아카이브(본문에서는 인용하지 않음, 탐색 기록), RFE와 1981년 계엄",
+"urls": [
+"https://legacy.osaarchivum.org/blog/%E2%80%9Call-the-telephone-and-telex-lines-are-disconnected%E2%80%9D-%E2%80%93-rfe-and-the-1981-martial-law-in-poland"
+]
+},
+{
+"id": "S12",
+"name": "Ulica Nowy Świat (폴란드어 위키백과)",
+"urls": [
+"https://pl.wikipedia.org/wiki/Ulica_Nowy_%C5%9Awiat_w_Warszawie"
+]
+},
+{
+"id": "S13",
+"name": "아마토르스카 현 주소 목록",
+"urls": [
+"https://mapa.targeo.pl/amatorska-nowy-swiat-21-warszawa~4666542/kawiarnia/adres"
+]
+},
+{
+"id": "S14",
+"name": "인민공화국 시기 밤 문화 기사",
+"urls": [
+"https://www.se.pl/wiadomosci/exclusive/zycie-nocne-w-prl-kultowe-kluby-striptiz-i-morze-alkoholu-aa-SDYb-K5GV-naVw.html"
+]
+},
+{
+"id": "S15",
+"name": "Cafe Amatorska 포크살 지점",
+"urls": [
+"https://restaurantguru.com/Amatorska-Warsaw"
+]
+},
+{
+"id": "S16",
+"name": "내셔널지오그래픽 폴란드판, 바르샤바 최고(最古) 과자점",
+"urls": [
+"https://www.national-geographic.pl/traveler/smaki-swiata/najstarsza-cukiernia-w-warszawie-slynie-ze-znakomitych-paczkow-przyciaga-tlumy-nie-tylko-w-tlusty-czwartek/"
+]
+},
+{
+"id": "S17",
+"name": "위키미디어 공용, Nowy Świat Street",
+"urls": [
+"https://commons.wikimedia.org/wiki/Nowy_%C5%9Awiat_Street_in_Warsaw?uselang=pl"
+]
+},
+{
+"id": "S19",
+"name": "Ulica Ludwika Zamenhofa (폴란드어 위키백과)",
+"urls": [
+"https://pl.wikipedia.org/wiki/Ulica_Ludwika_Zamenhofa_w_Warszawie"
+]
+},
+{
+"id": "S20",
+"name": "Monument to the Ghetto Heroes (영문 위키백과)",
+"urls": [
+"https://en.wikipedia.org/wiki/Monument_to_the_Ghetto_Heroes"
+]
+},
+{
+"id": "S21",
+"name": "Culture.pl, Modernista na gruzach",
+"urls": [
+"https://culture.pl/pl/artykul/miasto-po-getcie"
+]
+},
+{
+"id": "S22",
+"name": "KB.pl, 무라누프 지하의 도시",
+"urls": [
+"https://kb.pl/aktualnosci/ciekawostki/warszawa-ktorej-nie-widac-golym-okiem/"
+]
+},
+{
+"id": "S23",
+"name": "Drewnica 동음이의 문서",
+"urls": [
+"https://pl.wikipedia.org/wiki/Drewnica"
+]
+},
+{
+"id": "S24",
+"name": "Drewnica (Ząbki)",
+"urls": [
+"https://pl.wikipedia.org/wiki/Drewnica_(Z%C4%85bki)"
+]
+},
+{
+"id": "S25",
+"name": "Wojskowy Instytut Medyczny",
+"urls": [
+"https://pl.wikipedia.org/wiki/Wojskowy_Instytut_Medyczny"
+]
+},
+{
+"id": "S26",
+"name": "Warszawa Centralna",
+"urls": [
+"https://pl.wikipedia.org/wiki/Warszawa_Centralna"
+]
+},
+{
+"id": "S27",
+"name": "Ulica Chmielna",
+"urls": [
+"https://pl.wikipedia.org/wiki/Ulica_Chmielna_w_Warszawie"
+]
+},
+{
+"id": "S28",
+"name": "Aleja Jana Pawła II",
+"urls": [
+"https://pl.wikipedia.org/wiki/Aleja_Jana_Paw%C5%82a_II_w_Warszawie"
+]
+},
+{
+"id": "S29",
+"name": "Ulica gen. Władysława Andersa",
+"urls": [
+"https://pl.wikipedia.org/wiki/Ulica_gen._W%C5%82adys%C5%82awa_Andersa_w_Warszawie"
+]
+},
+{
+"id": "S30",
+"name": "교황 피격",
+"urls": [
+"https://en.wikipedia.org/wiki/Attempted_assassination_of_Pope_John_Paul_II",
+"https://en.wikipedia.org/wiki/Attempted_assassination_of_Ronald_Reagan",
+"https://en.wikipedia.org/wiki/Murder_of_John_Lennon"
+]
+},
+{
+"id": "S31",
+"name": "dzieje.pl, 1981년 학생 파업",
+"urls": [
+"https://dzieje.pl/artykulyhistoryczne/dziewiec-lat-buntu-niezalezne-zrzeszenie-studentow-1980-1989"
+]
+},
+{
+"id": "S32",
+"name": "Gra na wielu bębenkach (폴란드어 위키백과)",
+"urls": [
+"https://pl.wikipedia.org/wiki/Gra_na_wielu_b%C4%99benkach"
+]
+},
+{
+"id": "S33",
+"name": "OUP, Warsaw Tales",
+"urls": [
+"https://global.oup.com/academic/product/warsaw-tales-9780192855565"
+]
+},
+{
+"id": "S34",
+"name": "Forum Editrice, Che Guevara e altri racconti",
+"urls": [
+"https://forumeditrice.it/percorsi/lingua-e-letteratura/oltre/che-guevara-e-altri-racconti"
+]
+},
+{
+"id": "S35",
+"name": "FantLab, 러시아어판(НЛО, 2006)",
+"urls": [
+"https://fantlab.ru/edition339446"
+]
+},
+{
+"id": "S36",
+"name": "OUP 블로그, 토카르추크 인터뷰",
+"urls": [
+"https://blog.oup.com/2024/09/warsaw-tales-an-interview-with-olga-tokarczuk/"
+]
+},
+{
+"id": "S37",
+"name": "바르샤바대, 명예박사 수여 기사",
+"urls": [
+"https://www.uw.edu.pl/olga-tokarczuk-z-tytulem-doktora-honorowego-uw/"
+]
+},
+{
+"id": "S38",
+"name": "Sztetl, 스타프키 5/7 현판",
+"urls": [
+"https://sztetl.org.pl/pl/media/111701"
+]
+},
+{
+"id": "S39",
+"name": "WP WawaLove, 스타프키 건물 기사",
+"urls": [
+"https://wawalove.wp.pl/kim-jest-ta-dziewczynka-trwaja-poszukiwania-sa-pierwsze-tropy-6178497461053057a"
+]
+},
+{
+"id": "S40",
+"name": "Warszawa Wiki, Ulica Stawki",
+"urls": [
+"https://warszawa.fandom.com/wiki/Ulica_Stawki"
+]
+},
+{
+"id": "S41",
+"name": "Dwutygodnik, Zawodowa historia Amatorskiej",
+"urls": [
+"https://www.dwutygodnik.com/artykul/7937-zawodowa-historia-amatorskiej.html"
+]
+},
+{
+"id": "S42",
+"name": "SZUM, Amatorska (Nowy Świat 21)",
+"urls": [
+"https://magazynszum.pl/amatorska-nowy-swiat-21/"
+]
+},
+{
+"id": "S43",
+"name": "Radio dla Ciebie, 전후 카페",
+"urls": [
+"https://rdc.pl/informacje/legendarne-kultowe-warszawskie-kawiarnie-zanikaja-powojenne-perly-posluchaj"
+]
+},
+{
+"id": "S44",
+"name": "Radio dla Ciebie, 아마토르스카 보수",
+"urls": [
+"https://www.rdc.pl/public/aktualnosci/ostatnie-kolejki-przy-kawiarni-amatorska-lokal-czeka-remont-posluchaj_GsrGmSKqoiyYLP4UeuOk"
+]
+},
+{
+"id": "S45",
+"name": "TwojaPogoda.pl, 계엄 당시 날씨(IPN, IMGW-PIB 인용)",
+"urls": [
+"https://www.twojapogoda.pl/wiadomosc/2021-12-13/gdy-40-lat-temu-ogloszono-stan-wojenny-bylo-mrozno-i-snieznie-meteorolodzy-byli-represjonowani/"
+]
+},
+{
+"id": "S46",
+"name": "Meteoprognoza, 1981-12-13 날씨",
+"urls": [
+"https://meteoprognoza.pl/2018/12/13/zimowa-rocznica-czyli-jaka-byla-pogoda-13-grudnia-1981/"
+]
+},
+{
+"id": "S47",
+"name": "바르샤바 박물관, Słoneczny początek stanu wojennego w Warszawie",
+"urls": [
+"https://kolekcje.muzeumwarszawy.pl/en/articles/interpretations/sloneczny-poczatek-stanu-wojennego-w-warszawie"
+]
+},
+{
+"id": "S49",
+"name": "Puls Warszawy, 바르샤바 계엄 안내",
+"urls": [
+"https://pulswarszawa.pl/przewodnik/stan-wojenny-w-warszawie"
+]
+},
+{
+"id": "S50",
+"name": "Histmag, 1981년 12월 13일 증언 모음",
+"urls": [
+"https://histmag.org/13-grudnia-1981-r-dzien-ktory-zmienil-Polske-8824"
+]
+},
+{
+"id": "S51",
+"name": "러시아어판 온라인 열람본, 대조 전용",
+"urls": [
+"https://www.rulit.me/books/igra-na-raznyh-barabanah-rasskazy-read-313936-65.html"
+]
+},
+{
+"id": "S52",
+"name": "Interia, 계엄 회고(크라쿠프 사례)",
+"urls": [
+"https://historia.interia.pl/prl/news-nie-balismy-sie-bo-nie-wiedzielismy-czym-jest-stan-wojenny,nId,8049890"
+]
+},
+{
+"id": "S53",
+"name": "«Новая Польша» 2005 №7/8, 「Че Гевара」(М. 쿠르간스카야 번역), PDF 68–77쪽",
+"urls": [
+"https://novayapolsha-pdfs.fra1.digitaloceanspaces.com/2005/07-08.pdf"
+]
+},
+{
+"id": "S54",
+"name": "교보문고, 《여러 개의 북을 두드리며》 소개와 목차",
+"urls": [
+"https://event.kyobobook.co.kr/funding/detail/487"
+]
+}
+],
+"compare": [
+[
+"결말의 시점(¶231)",
+"다리를 건너 도시 반대편으로 향하다가 대로에서 장갑차를 봄",
+"걸어서 건너편으로 가다가 다리 위에서 대로를 지나는 БТР(병력수송장갑차) 행렬을 봄",
+"러시아어판이 맞으면 포니아토프스키 다리 추정이 강해지고, 마지막 시점이 지상이 아니라 다리 위가 된다"
+],
+[
+"차량",
+"장갑차",
+"БТР",
+"바퀴형 장갑차 기록과 맞는다 [S47]. 전차(탱크)로 재현하지 않는다"
+],
+[
+"어두운 공간(¶109)",
+"중2층 복도",
+"어두운 계단참",
+"\"중2층\"은 층이 아니라 계단참일 수 있다"
+],
+[
+"층수(¶17, ¶69)",
+"M은 2층, 화장실 2층",
+"둘 다 3층",
+"폴란드식 층수 환산 차이일 수 있다. 다만 안나의 층은 두 번역이 같아 환산만으로는 전부 설명되지 않는다"
+],
+[
+"안나의 층(¶117)",
+"5층",
+"5층",
+"일치. 지상층 포함인지는 원문으로만 알 수 있어 실제 높이는 불명이다"
+],
+[
+"건물 유형(¶17, ¶117)",
+"빌라",
+"아파트, 건물",
+"다층 공동주택일 가능성이 높다. 원문 확인 전까지 단독 빌라로 재현하지 않는다"
+],
+[
+"안뜰(¶117)",
+"첫 번째 대문, 부서진 사각형",
+"첫 번째 아치, 정확하지 않은 사각형",
+"아치형 통로와 불규칙한 안뜰로 재현한다"
+],
+[
+"이고르(¶77)",
+"이고르",
+"유레크(Юрек)",
+"영역자 인터뷰도 Igor다 [S36]. 인물 이름은 이고르로 둔다"
+],
+[
+"드레브니차(¶99)",
+"드레브니차 마을의 여신",
+"숲의 님프, 마을 이름 없음",
+"지명이 아닐 가능성이 생겼다. 2장 참조"
+],
+[
+"마을의 규모(¶97–101)",
+"작은 마을, 집 앞 골목",
+"소도시(городок), 집 앞 인도",
+"마을의 크기가 달라진다. 부록 C 18번은 한국어판을 따른다"
+],
+[
+"파업의 형태(¶109, ¶179)",
+"교대 파업, 교대식으로 바뀜",
+"연속 파업, 무기한 파업으로 넘어감",
+"뜻이 반대에 가깝다. 12월 12일 파업 정지 회고와 겹치는 읽기는 한국어판에만 기댄다. 부록 C 10번"
+],
+[
+"원룸의 창(¶187, ¶211)",
+"단수, 복수를 정하지 않음",
+"창과 커튼봉이 복수",
+"부록 C 2번은 창 둘로 짓는다"
+],
+[
+"기념비(¶9)",
+"기념비",
+"기념비, 이름 없음",
+"일치. 게토 영웅 기념비는 여전히 추정이다"
+],
+[
+"카페 이름(¶19, ¶117)",
+"아마토르스카",
+"«Любительское», 애호가라는 뜻을 옮긴 이름",
+"위치가 같아 같은 카페로 본다 [C]. 러시아어판도 카페의 위치를 뒷받침한다"
+]
+]
+}
