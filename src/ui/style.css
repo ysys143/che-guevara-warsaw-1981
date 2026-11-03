@@ -60,6 +60,12 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 #title button{border:1px solid #777;padding:11px 20px;font-size:16px;min-height:44px;background:#0006}
 #title button:hover{background:#fff1}
 #title .row{display:flex;gap:10px;flex-wrap:wrap}
+#title .tags{display:flex;gap:6px;margin-top:-4px}
+#title .chip{display:inline-block;padding:1px 9px;border:1px solid #8a8576;border-radius:999px;font-size:12px;letter-spacing:.04em;color:#ddd8c8;background:#0007;white-space:nowrap}
+#title .keys{display:grid;grid-template-columns:auto 1fr;gap:7px 14px;align-items:center;margin:0;font-size:13px;color:#c9c4b6;text-shadow:0 1px 3px #000}
+#title .keys dt{display:flex;align-items:center;gap:4px;color:#8a8576}
+#title .keys dd{margin:0}
+#title kbd{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;padding:0 6px;border:1px solid #6d6a60;border-bottom-width:2px;border-radius:4px;background:#111c;color:#e8e4d8;font:12px/1 inherit;font-family:inherit}
 #status{position:absolute;left:50%;top:44%;transform:translateX(-50%);font-size:13px;color:var(--dim);opacity:0;transition:opacity .3s}
 #status.show{opacity:1}
 #room{position:absolute;inset:0;background:#101012;display:none;pointer-events:auto;overflow:auto;font-family:"Noto Serif KR","Apple SD Gothic Neo",serif}
