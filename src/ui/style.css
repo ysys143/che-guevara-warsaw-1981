@@ -60,12 +60,49 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 #title button{border:1px solid #777;padding:11px 20px;font-size:16px;min-height:44px;background:#0006}
 #title button:hover{background:#fff1}
 #title .row{display:flex;gap:10px;flex-wrap:wrap}
-#title .tags{display:flex;gap:6px;margin-top:-4px}
 #title .chip{display:inline-block;padding:1px 9px;border:1px solid #8a8576;border-radius:999px;font-size:12px;letter-spacing:.04em;color:#ddd8c8;background:#0007;white-space:nowrap}
 #title .keys{display:grid;grid-template-columns:auto 1fr;gap:7px 14px;align-items:center;margin:0;font-size:13px;color:#c9c4b6;text-shadow:0 1px 3px #000}
 #title .keys dt{display:flex;align-items:center;gap:4px;color:#8a8576}
 #title .keys dd{margin:0}
 #title kbd{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;padding:0 6px;border:1px solid #6d6a60;border-bottom-width:2px;border-radius:4px;background:#111c;color:#e8e4d8;font:12px/1 inherit;font-family:inherit}
+#title .menu{gap:12px}
+#title .lead{font-size:13.5px;color:var(--dim)}
+#title .places{list-style:none;margin:0;padding:6px 0;display:grid;grid-template-columns:1fr 1fr;gap:0 10px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+#title .places .pl{display:flex;flex-direction:column;align-items:flex-start;gap:1px;width:100%;border:0;border-left:2px solid transparent;background:none;padding:6px 8px;min-height:40px;text-align:left;font-size:14px}
+#title .places .pl b{font-weight:500;color:var(--ink);text-shadow:0 1px 3px #000}
+#title .places .pl small{font:11.5px/1.3 ui-sans-serif,system-ui,sans-serif;color:#8f8a7c}
+#title .places .pl:hover{background:#fff1}
+#title .places .pl[aria-current]{border-left-color:var(--amber);background:#d9a44112}
+#title .places .pl[aria-current] b{color:var(--amber)}
+#title #story{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;text-align:left}
+#title #story::after{content:'▸';margin-left:auto;color:var(--dim);transition:transform .2s}
+#title #story[aria-expanded=true]::after{transform:rotate(90deg)}
+#title .storybox{display:none;flex-direction:column;gap:12px;padding:12px 0 2px}
+#title .storybox.open{display:flex}
+#title .storybox .sub{font-size:13.5px;color:var(--dim)}
+#title .maphelp{font-size:12px;gap:5px 10px}
+#title .maphelp dt{font:11.5px ui-sans-serif,system-ui,sans-serif}
+#title .maphelp kbd{min-width:20px;height:20px;font-size:11px;padding:0 4px}
+#title .osm{font-size:11.5px;color:#8f8a7c}
+#title .card{position:absolute;right:16px;top:16px;width:min(380px,calc(100vw - 32px));max-height:calc(100% - 64px);overflow:auto;pointer-events:auto;background:#0c0d0ff0;border:1px solid var(--line);padding:18px 20px 20px;display:flex;flex-direction:column;gap:10px;box-shadow:0 10px 40px #000a}
+#title .card[hidden]{display:none}
+#title .card h2:focus{outline:none}
+#title.carded .home{display:none}
+@media (max-width:920px){#title.carded .menu{display:none}#title .card{left:0;right:0;top:auto;bottom:0;width:auto;max-height:64vh;border-width:1px 0 0}}
+#title .menu.storyon .places,#title .menu.storyon .lead,#title .menu.storyon .maphelp{display:none}
+#title .home{position:absolute;right:12px;bottom:40px;pointer-events:auto;padding:6px 12px;min-height:32px;font-size:12.5px;border-color:#5558;background:#000a}
+#title .card .x{position:absolute;right:10px;top:10px;padding:4px 10px;min-height:30px;font-size:12px;border-color:#5556}
+#title .card h2{margin:0;font-size:21px;font-weight:500;padding-right:56px;word-break:keep-all}
+#title .card .gr{display:flex;align-items:center;gap:8px;font:12px ui-sans-serif,system-ui,sans-serif;color:var(--dim)}
+#title .card .gr .tag{border:1px solid var(--amber);color:var(--amber);padding:0 6px;border-radius:2px;font-weight:600}
+#title .card .plname{font:12.5px ui-sans-serif,system-ui,sans-serif;color:#8f8a7c;margin-top:-6px}
+#title .card .desc{font-size:15px}
+#title .card blockquote{margin:0;padding:2px 0 2px 12px;border-left:2px solid var(--line);font-size:14.5px;line-height:1.65;color:#ddd8c8}
+#title .card blockquote small{display:block;color:var(--dim);font:11px ui-monospace,Menlo,monospace;margin-top:2px}
+#title .card .note{font-size:12.5px;color:var(--dim)}
+#title .card .row{flex-direction:column;gap:6px;margin-top:4px}
+#title .card .enter{width:100%;text-align:left;border-color:var(--amber);color:var(--ink)}
+#title .card .enter:hover{background:#d9a4411c}
 #status{position:absolute;left:50%;top:44%;transform:translateX(-50%);font-size:13px;color:var(--dim);opacity:0;transition:opacity .3s}
 #status.show{opacity:1}
 #room{position:absolute;inset:0;background:#101012;display:none;pointer-events:auto;overflow:auto;font-family:"Noto Serif KR","Apple SD Gothic Neo",serif}
@@ -85,5 +122,5 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 #room a{color:#b9cfe0;word-break:break-all}
 #room .tag{display:inline-block;font:11px ui-sans-serif,sans-serif;border:1px solid #666;padding:0 5px;margin-right:6px}
 #room .note{color:var(--dim);font-size:14px}
-@media (max-width:640px){#title{align-items:flex-end;padding:16px;background:linear-gradient(0deg,#000e 0,#000b 56%,#0000 82%)}#hint{max-width:58vw;bottom:44px;font-size:11px}#caption{bottom:14vh}}
+@media (max-width:640px){#title{align-items:flex-end;padding:16px;background:linear-gradient(0deg,#000e 0,#000b 56%,#0000 82%)}#title .menu{gap:9px}#title .lead,#title .maphelp{display:none}#title .places{display:flex;overflow-x:auto;gap:6px;padding:8px 0;scrollbar-width:none}#title .places li{flex:none}#title .places .pl{border:1px solid #5558;border-radius:999px;padding:6px 12px;min-height:36px}#title .places .pl small{display:none}#title .places .pl[aria-current]{border-color:var(--amber)}#title .home{top:12px;bottom:auto}#hint{max-width:58vw;bottom:44px;font-size:11px}#caption{bottom:14vh}}
 @media (prefers-reduced-motion:reduce){#caption,#fade,#sfx{transition-duration:.01s}}
