@@ -12,7 +12,7 @@ export class Hud{
   this.marks=[];this.gradesOn=false;this.gradesAllowed=true;this.mapHandler=null;
   this.btnGrades=this.tool('근거 표시','G',()=>this.toggleGrades());this.btnPanel=this.tool('원문','Q',()=>this.togglePanel());this.btnMap=this.tool('M의 창','M',()=>this.mapHandler&&this.mapHandler());this.btnSound=this.tool('소리','',()=>this.onSound&&this.onSound());
   this.btnMap.style.display='none';this.toolsEl.style.display='none';this.panelItems=[];
-  this.panelEl.innerHTML='<button class="close">닫기</button><h3>이 장면의 원문 근거</h3><div class="body"></div><p style="font-size:12px;color:#a9a395;margin-top:2em">짧은 인용만 싣는다. 전문은 사용 권리를 확인하기 전까지 싣지 않는다.</p>';
+  this.panelEl.innerHTML='<button class="close">닫기</button><h3>이 장면의 원문 근거</h3><div class="body"></div>';
   this.panelEl.querySelector('.close').onclick=e=>{this.togglePanel(false);e.currentTarget.blur()};
  }
  tool(text,key,fn){const b=h('button',null,this.toolsEl);b.textContent=key?`${text} ${key}`:text;b.onclick=e=>{e.stopPropagation();fn();b.blur()};return b}
@@ -26,9 +26,9 @@ export class Hud{
  hint(t=''){this.hintEl.textContent=t}
  status(t=''){this.statusEl.textContent=t;this.statusEl.classList.toggle('show',!!t)}
  hot(t){this.hotEl.textContent=t||'';this.hotEl.classList.toggle('show',!!t)}
- imagine(on){this.imagineEl.classList.toggle('show',!!on)}
+ imagine(on){this._im=!!on;this.imagineEl.classList.toggle('show',this._im&&!!this.gradesOn)}
  viewfinder(on,read=''){this.finder.classList.toggle('show',!!on);this.finderRead.textContent=read}
- toggleGrades(v){if(!this.gradesAllowed)return;this.gradesOn=v??!this.gradesOn;this.btnGrades.setAttribute('aria-pressed',this.gradesOn);this.renderMarks()}
+ toggleGrades(v){if(!this.gradesAllowed)return;this.gradesOn=v??!this.gradesOn;this.btnGrades.setAttribute('aria-pressed',this.gradesOn);this.renderMarks();this.imagine(this._im)}
  allowGrades(v){if(this.forceGrades)return;this.gradesAllowed=v;this.btnGrades.disabled=!v;if(!v){this.gradesOn=false;this.btnGrades.setAttribute('aria-pressed',false)}this.renderMarks()}
  setMarks(list){this.marks=(list||[]).map(m=>({...m,pos:new THREE.Vector3(...m.pos)}));this.renderMarks()}
  renderMarks(){this.markLayer.innerHTML='';for(const m of this.marks){m.el=null}if(!this.gradesOn)return;for(const m of this.marks){const e=document.createElement('div');e.className='mark '+m.g;e.innerHTML=`<b>${m.g}</b><span></span>`;e.querySelector('span').textContent=m.t;this.markLayer.appendChild(e);m.el=e}}
