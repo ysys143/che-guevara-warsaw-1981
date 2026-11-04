@@ -14,7 +14,7 @@ export const toLL=(x,z)=>[LAT0-z/KZ,LON0+x/KX];
 const PX=lon=>(lon-LON0)*KX,PZ=lat=>-(lat-LAT0)*KZ;
 const IVORY=0xefe9da,AMBER=0xe0a548;
 
-function groundText(text,w){const c=document.createElement('canvas');c.width=1024;c.height=256;const g=c.getContext('2d');g.font='600 150px "Apple SD Gothic Neo",sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillStyle='#efe9da';g.fillText(text,512,128);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=8;
+function groundText(text,w){const c=document.createElement('canvas');c.width=1024;c.height=256;const g=c.getContext('2d');g.font='600 150px "Noto Serif KR","AppleMyungjo","Nanum Myeongjo",serif';g.textAlign='center';g.textBaseline='middle';g.fillStyle='#efe9da';g.fillText(text,512,128);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=8;
  const m=new THREE.Mesh(new THREE.PlaneGeometry(w,w/4),new THREE.MeshBasicMaterial({map:t,transparent:true,opacity:.42,depthWrite:false,fog:false}));m.rotation.x=-Math.PI/2;m.renderOrder=4;return m}
 
 // 오늘의 지도 타일(OpenStreetMap 표준 타일, © OpenStreetMap 기여자)을 땅에 깐다. CARTO 래스터는 API 키를 요구해 쓰지 않는다.
@@ -47,7 +47,7 @@ function tileLayer(s,e,ct){
   dispose(){for(const t of cache.values()){t.dead=true;t.mesh.material.map?.dispose();t.mesh.material.dispose()}cache.clear();queue.length=0;geo.dispose();s.remove(root)}};
 }
 
-export async function titleMap(c,{onSelect,area,focus}={}){const{e,hud}=c;const city=await getCity(c),d=city.data;const s=new THREE.Scene();s.background=new THREE.Color(0x0a0c0f);s.add(city.g);s.fog=city.fogObj;s.add(new THREE.HemisphereLight(0xd9dfe8,0x55544e,3.4));
+export async function titleMap(c,{onSelect,area,focus}={}){const{e,hud}=c;try{await Promise.race([Promise.all(['600 44px "Noto Serif KR"','24px "Noto Serif KR"','600 150px "Noto Serif KR"'].map(f=>document.fonts.load(f))),new Promise(r=>setTimeout(r,2500))])}catch{}const city=await getCity(c),d=city.data;const s=new THREE.Scene();s.background=new THREE.Color(0x0a0c0f);s.add(city.g);s.fog=city.fogObj;s.add(new THREE.HemisphereLight(0xd9dfe8,0x55544e,3.4));
  city.style({fog:0x10131a,fogD:.00007,sky:[.1,.108,.12],sun:[0,0,0],lit:.3,snow:.3,road:0x6a6a6e,walk:0x7a7874,ground:0x4a4a4c,park:0x3a4034,water:0x0a1016,bank:0x34332f,win:1});
  const rt=[];for(let i=0;i<d.route.length;i+=2)rt.push(new THREE.Vector3(d.route[i],2.5,d.route[i+1]));const line=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(rt,false,'catmullrom',.01),700,9,5),new THREE.MeshBasicMaterial({color:0xd9462f}));s.add(line);
  const east=city.bridgeLine?.at(-1)||d.anchors.bridgeE;const where=a=>Array.isArray(a)?a:a==='room'?[east[0]+150,east[1]-60]:a==='booth'?[east[0]+105,east[1]-10]:d.anchors[a];
@@ -107,6 +107,12 @@ export async function titleMap(c,{onSelect,area,focus}={}){const{e,hud}=c;const 
    for(const q of items)if(q.sp){const k=e.camera.position.distanceTo(q.sp.position)*(q.k||1);q.sp.scale.set(k*.14,k*.033,1)}
    for(const m of lineMats)m.resolution.set(innerWidth,innerHeight);for(const q of pins)if(q.P.kind==='unknown'){const v=kind==='unknown'||q===sel||q===hover||o.dist<2500;q.sp.visible=v;q.pin.visible=v}if(kind==='street')for(const q of items)if(q.type==='street')q.sp.visible=q===sel||q===hover||o.dist<3200;
    const tt=performance.now()/1000,far=o.dist>4500;for(const[i,m]of movers.entries()){const v=!(i===0&&far);m.m.visible=v;if(v)m.update(dt,tt)}
+   // 이름표끼리 겹치면 우선순위가 낮은 쪽을 숨긴다(선택·마우스 > 장면 > 지점 > 추정 > 거리)
+   let placed=[];{const rank=q=>q===sel||q===hover?0:q.P.kind==='scene'?1:q.P.kind==='point'?2:q.P.kind==='unknown'?3:4;for(const q of pins)if(q.P.kind!=='unknown')q.sp.visible=true;const L=items.filter(q=>q.sp&&q.sp.visible).sort((a,b)=>rank(a)-rank(b));
+    for(const q of L){const p=q.sp.position;const a=scr(p.x,p.y,p.z),rx=cam.matrixWorld.elements,sx=q.sp.scale.x,side=scr(p.x+rx[0]*sx,p.y+rx[1]*sx,p.z+rx[2]*sx);if(!a||!side){q.sp.visible=false;continue}const fw=Math.hypot(side[0]-a[0],side[1]-a[1]),h=fw*120/512,w=fw*(q.sp.userData.tw||.5)+6;const r=[a[0]-w/2,a[1]-h,a[0]+w/2,a[1]-h*.5];
+     if(placed.some(s=>r[0]<s[2]&&r[2]>s[0]&&r[1]<s[3]&&r[3]>s[1])){q.sp.visible=false;continue}placed.push(r)}}
+   // 바닥에 쓴 구역 이름은 맨 나중에 놓는다. 네 모서리를 투영한 사각형이 다른 이름표와 겹치면 숨긴다
+   for(const q of items){if(q.type!=='area')continue;const g=q.m.geometry.parameters,hw=g.width/2,hh=g.height/2;const cs=[[-hw,-hh],[hw,-hh],[hw,hh],[-hw,hh]].map(([dx,dz])=>scr(q.x+dx,14,q.z+dz));if(cs.some(x=>!x)){q.m.visible=false;continue}const xs=cs.map(x=>x[0]),ys=cs.map(x=>x[1]);const r=[Math.min(...xs)+.18*(Math.max(...xs)-Math.min(...xs)),Math.min(...ys),Math.max(...xs)-.18*(Math.max(...xs)-Math.min(...xs)),Math.max(...ys)];const hit=q!==sel&&placed.some(s=>r[0]<s[2]&&r[2]>s[0]&&r[1]<s[3]&&r[3]>s[1]);q.m.visible=!hit;if(!hit)placed.push(r)}
    tiles.update();
    if(e.pointerSeen){const h=pick();if(h!==hover){hover=h;paint()}e.canvas.style.cursor=h?'pointer':''}},
   onClick(){const q=pick();if(q){select(q.P.id);onSelect?.(q.P.id)}}};

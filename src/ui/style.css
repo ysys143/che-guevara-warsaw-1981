@@ -154,3 +154,31 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 /* 겹쳐 보기 컨트롤은 지도 위 오른쪽 위에 둔다. 넓은 화면에서 카드가 열리면 카드 왼쪽으로 비킨다 */
 #title .mapctl{top:16px;bottom:auto;right:16px}
 @media (min-width:921px){#title.carded .mapctl{display:flex;right:412px}#title.carded .home{display:none}}
+/* 시작 패널 정돈: 한 장의 패널, 세리프 제목, 밑줄 탭, 한 줄짜리 목록, 조용한 보조 정보 */
+#title{background:linear-gradient(90deg,#000a 0,#0005 34%,#0000 50%)}
+#title .menu{width:min(400px,100%);gap:0;background:#0b0c0eeb;border:1px solid #ffffff14;padding:26px 26px 18px;box-shadow:0 18px 60px #000c;backdrop-filter:blur(6px)}
+#title .menu p,#title .menu h1,#title .keys{text-shadow:none}
+#title .mh{display:flex;flex-direction:column;gap:6px;padding-bottom:18px}
+#title .eyebrow{font:500 11px ui-sans-serif,system-ui,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--amber)}
+#title h1{font-family:"Noto Serif KR","AppleMyungjo",serif;font-weight:500;font-size:27px;line-height:1.3;letter-spacing:-.01em}
+#title .byline{font:400 13px "Noto Serif KR","AppleMyungjo",serif;color:var(--dim)}
+#title .tabs{gap:0 14px;border-bottom:1px solid #ffffff14;padding:0}
+#title .tabs button{border:0;border-bottom:2px solid transparent;border-radius:0;padding:8px 0 7px;min-height:0;background:none;font-size:12.5px;color:#8f8a7c;margin-bottom:-1px}
+#title .tabs button:hover{background:none;color:var(--ink)}
+#title .tabs button[aria-selected=true]{border-bottom-color:var(--amber);color:var(--ink)}
+#title .story{margin-top:14px}
+#title #story{padding:11px 14px;font-size:15px;border-color:#ffffff26;background:#ffffff08}
+#title #story:hover{border-color:var(--amber)}
+#title .maphelp{margin-top:14px;display:flex;flex-wrap:wrap;gap:4px 14px;font-size:11.5px;color:#7d786c}
+#title .maphelp dt,#title .maphelp dd{display:inline-flex;align-items:center;gap:3px;color:#7d786c}
+#title .maphelp dd{margin-left:-8px}
+#title .osm{margin-top:10px;font-size:10.5px;color:#6b675d}
+@media (min-width:641px){
+ #title .places{display:block;max-height:36vh;padding:4px 0;border:0;border-bottom:1px solid #ffffff14;margin:0}
+ #title .places li{border-bottom:1px solid #ffffff0a}
+ #title .places li:last-child{border-bottom:0}
+ #title .places .pl{flex-direction:row;align-items:baseline;justify-content:space-between;gap:12px;padding:9px 10px 9px 12px;min-height:0;border-left:2px solid transparent}
+ #title .places .pl b{font:500 14.5px "Noto Serif KR","AppleMyungjo",serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+ #title .places .pl small{flex:none;font-size:11px;color:#7d786c;text-align:right;max-width:44%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+}
+@media (max-width:640px){#title .menu{padding:16px 16px 12px;width:100%}#title h1{font-size:22px}#title .mh{padding-bottom:10px}#title .tabs{overflow-x:auto;flex-wrap:nowrap}}
