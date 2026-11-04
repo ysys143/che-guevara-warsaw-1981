@@ -140,3 +140,17 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 #room .note{color:var(--dim);font-size:14px}
 @media (max-width:640px){#title{align-items:flex-end;padding:16px;background:linear-gradient(0deg,#000e 0,#000b 56%,#0000 82%)}#title .menu{gap:9px}#title .lead,#title .maphelp{display:none}#title .places{display:flex;overflow-x:auto;gap:6px;padding:8px 0;scrollbar-width:none}#title .places li{flex:none}#title .places .pl{border:1px solid #5558;border-radius:999px;padding:6px 12px;min-height:36px}#title .places .pl small{display:none}#title .places .pl[aria-current]{border-color:var(--amber)}#title .mapctl{top:12px;bottom:auto}#title .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}#title .tabs button{flex:none}#title .places.nm{max-height:30vh}#hint{max-width:58vw;bottom:44px;font-size:11px}#caption{bottom:14vh}}
 @media (prefers-reduced-motion:reduce){#caption,#fade,#sfx{transition-duration:.01s}}
+
+/* 오늘의 지도 겹쳐 보기: 눈에 띄는 주 컨트롤 */
+#title .lay{display:flex;align-items:center;gap:8px;padding:10px 16px;min-height:44px;font-size:14px;border:1px solid var(--amber);background:#0b0c0ee6;color:var(--ink);box-shadow:0 4px 18px #000a}
+#title .lay .ico{color:var(--amber);font-size:17px}
+#title .lay kbd{min-width:20px;height:20px;font-size:11px;padding:0 4px}
+#title .lay:hover{background:#d9a4412a}
+#title .lay[aria-pressed=true]{background:var(--amber);color:#111}
+#title .lay[aria-pressed=true] .ico{color:#111}
+#title .layer{padding:0;gap:10px;background:none}
+#title .layer input{width:130px}
+@media (max-width:640px){#title .lay kbd{display:none}#title .lay{padding:8px 12px;font-size:13px}}
+/* 겹쳐 보기 컨트롤은 지도 위 오른쪽 위에 둔다. 넓은 화면에서 카드가 열리면 카드 왼쪽으로 비킨다 */
+#title .mapctl{top:16px;bottom:auto;right:16px}
+@media (min-width:921px){#title.carded .mapctl{display:flex;right:412px}#title.carded .home{display:none}}
