@@ -87,10 +87,26 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 #title .card{position:absolute;right:16px;top:16px;width:min(380px,calc(100vw - 32px));max-height:calc(100% - 64px);overflow:auto;pointer-events:auto;background:#0c0d0ff0;border:1px solid var(--line);padding:18px 20px 20px;display:flex;flex-direction:column;gap:10px;box-shadow:0 10px 40px #000a}
 #title .card[hidden]{display:none}
 #title .card h2:focus{outline:none}
-#title.carded .home{display:none}
+#title.carded .mapctl{display:none}
 @media (max-width:920px){#title.carded .menu{display:none}#title .card{left:0;right:0;top:auto;bottom:0;width:auto;max-height:64vh;border-width:1px 0 0}}
 #title .menu.storyon .places,#title .menu.storyon .lead,#title .menu.storyon .maphelp{display:none}
-#title .home{position:absolute;right:12px;bottom:40px;pointer-events:auto;padding:6px 12px;min-height:32px;font-size:12.5px;border-color:#5558;background:#000a}
+#title .mapctl{position:absolute;right:12px;bottom:40px;display:flex;flex-direction:column;align-items:flex-end;gap:6px;pointer-events:auto}
+#title .home,#title .lay{padding:6px 12px;min-height:32px;font-size:12.5px;border:1px solid #5558;background:#000a}
+#title .lay[aria-pressed=true]{border-color:var(--amber);color:var(--amber)}
+#title .layer{display:flex;align-items:center;gap:8px;background:#000a;padding:0 0 0 8px}
+#title .layer input{width:110px;accent-color:var(--amber)}
+#title .tabs{display:flex;flex-wrap:wrap;gap:4px}
+#title .tabs button{border:1px solid #5556;padding:3px 9px;min-height:30px;font-size:12.5px;border-radius:999px;color:var(--dim)}
+#title .tabs button[aria-selected=true]{border-color:var(--amber);color:var(--ink)}
+#title .places{max-height:34vh;overflow:auto;scrollbar-width:thin}
+#title .places.nm{display:block}
+#title .nk h3{font-size:13px;font-weight:600;color:var(--amber);margin:10px 0 4px}
+#title .nk dl{margin:0;display:grid;grid-template-columns:max-content 1fr;gap:3px 10px;font-size:13px}
+#title .nk dt{color:var(--ink)}
+#title .nk dd{margin:0;color:var(--dim)}
+#title .nk small{font:11px ui-monospace,Menlo,monospace;color:#8f8a7c}
+#title .card .gm{font-size:13px;color:var(--dim)}
+#title .card .gm a{color:#b9cfe0}
 #title .card .x{position:absolute;right:10px;top:10px;padding:4px 10px;min-height:30px;font-size:12px;border-color:#5556}
 #title .card h2{margin:0;font-size:21px;font-weight:500;padding-right:56px;word-break:keep-all}
 #title .card .gr{display:flex;align-items:center;gap:8px;font:12px ui-sans-serif,system-ui,sans-serif;color:var(--dim)}
@@ -122,5 +138,5 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 #room a{color:#b9cfe0;word-break:break-all}
 #room .tag{display:inline-block;font:11px ui-sans-serif,sans-serif;border:1px solid #666;padding:0 5px;margin-right:6px}
 #room .note{color:var(--dim);font-size:14px}
-@media (max-width:640px){#title{align-items:flex-end;padding:16px;background:linear-gradient(0deg,#000e 0,#000b 56%,#0000 82%)}#title .menu{gap:9px}#title .lead,#title .maphelp{display:none}#title .places{display:flex;overflow-x:auto;gap:6px;padding:8px 0;scrollbar-width:none}#title .places li{flex:none}#title .places .pl{border:1px solid #5558;border-radius:999px;padding:6px 12px;min-height:36px}#title .places .pl small{display:none}#title .places .pl[aria-current]{border-color:var(--amber)}#title .home{top:12px;bottom:auto}#hint{max-width:58vw;bottom:44px;font-size:11px}#caption{bottom:14vh}}
+@media (max-width:640px){#title{align-items:flex-end;padding:16px;background:linear-gradient(0deg,#000e 0,#000b 56%,#0000 82%)}#title .menu{gap:9px}#title .lead,#title .maphelp{display:none}#title .places{display:flex;overflow-x:auto;gap:6px;padding:8px 0;scrollbar-width:none}#title .places li{flex:none}#title .places .pl{border:1px solid #5558;border-radius:999px;padding:6px 12px;min-height:36px}#title .places .pl small{display:none}#title .places .pl[aria-current]{border-color:var(--amber)}#title .mapctl{top:12px;bottom:auto}#title .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}#title .tabs button{flex:none}#title .places.nm{max-height:30vh}#hint{max-width:58vw;bottom:44px;font-size:11px}#caption{bottom:14vh}}
 @media (prefers-reduced-motion:reduce){#caption,#fade,#sfx{transition-duration:.01s}}

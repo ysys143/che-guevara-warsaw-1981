@@ -16,10 +16,12 @@ export function bldMaterial(){return new THREE.ShaderMaterial({uniforms:{uFog:{v
  fragmentShader:`uniform vec3 uFog,uSky,uSun,uSunDir,uBase;uniform float uFogD,uLit,uSnow,uWin,uT;varying vec2 vU;varying float vS,vR,vD;varying vec3 vN,vW;
  float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
  float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x),f.y);}
+ // 한 픽셀이 무늬 한 주기보다 넓게 덮으면 무늬를 평균(.5)으로 녹인다. 먼 지붕과 벽의 자글거림을 막는다
+ float nf(vec2 p){vec2 w=fwidth(p);return mix(n(p),.5,smoothstep(.25,.9,w.x+w.y));}
  void main(){vec3 N=normalize(vN);float lam=max(dot(N,uSunDir),0.);float sky=.55+.45*N.y;vec3 c;
- if(vR>.5){c=mix(vec3(.05,.05,.055),vec3(.11,.1,.09),n(vU*.15));c=mix(c,vec3(.86,.89,.93),uSnow*smoothstep(.2,.7,n(vU*.4)+.4));c*=uSky*6.+uSun*lam*1.2;}
+ if(vR>.5){c=mix(vec3(.05,.05,.055),vec3(.11,.1,.09),nf(vU*.15));c=mix(c,vec3(.86,.89,.93),uSnow*smoothstep(.2,.7,nf(vU*.4)+.4));c*=uSky*6.+uSun*lam*1.2;}
  else{float mx=3.5+vS*.9,my=3.25;vec2 g=vec2(vU.x/mx,vU.y/my);vec2 cell=floor(g),f=fract(g);float lod=clamp(vD*.0012,0.,1.);float win=smoothstep(.2,.24,f.x)*smoothstep(.8,.76,f.x)*smoothstep(.24,.28,f.y)*smoothstep(.8,.76,f.y);if(vU.y<3.6)win*=.0;win*=uWin;
- vec3 pl=uBase*mix(vec3(.82,.8,.76),vec3(1.12,1.06,.96),vS);pl*=.72+.42*n(vec2(vU.x*.08,vU.y*.2+vS*9.));pl*=1.-.3*smoothstep(0.,1.,n(vec2(vU.x*.7,vU.y*.05)))*(1.-smoothstep(0.,14.,vU.y));pl*=.92+.08*smoothstep(.0,.05,f.y);
+ vec3 pl=uBase*mix(vec3(.82,.8,.76),vec3(1.12,1.06,.96),vS);pl*=.72+.42*nf(vec2(vU.x*.08,vU.y*.2+vS*9.));pl*=1.-.3*smoothstep(0.,1.,nf(vec2(vU.x*.7,vU.y*.05)))*(1.-smoothstep(0.,14.,vU.y));pl*=.92+.08*smoothstep(.0,.05,f.y);
  pl=mix(pl,pl*.72,step(vU.y,3.4));
  float lit=step(h(cell+vS*31.),uLit);vec3 glass=vec3(.018,.02,.024)+uSky*.5*n(cell*3.);vec3 lamp=mix(vec3(.95,.62,.28),vec3(.8,.75,.55),h(cell+3.))*(.46+.34*h(cell+7.));
  c=(pl*(uSky*5.2*sky+uSun*lam*1.1));vec3 fr=pl*.6;c=mix(c,fr,(1.-win)*0.);c=mix(c,lit>.5?lamp:glass*(1.+uSun*lam*2.),win*(1.-lod*.75));c+=lamp*lit*uWin*lod*.09;
@@ -38,6 +40,8 @@ export class City{
  constructor(data){this.data=data;const s=this.s=ensure(data);this.g=new THREE.Group();
   this.fogObj=new THREE.FogExp2(0x101114,.002);this.sMat=new THREE.MeshStandardMaterial({color:0x2c2c2d,roughness:.5,metalness:.05,side:THREE.DoubleSide});this.road=new THREE.Mesh(s.road,this.sMat);this.wMat=new THREE.MeshStandardMaterial({color:0x4a4845,roughness:.8,side:THREE.DoubleSide});this.walk=new THREE.Mesh(s.walk,this.wMat);this.pMat=new THREE.MeshStandardMaterial({color:0x2a2c26,roughness:1});this.parks=new THREE.Mesh(s.parks,this.pMat);
   this.bld=new THREE.Mesh(s.bld,s.mat);this.bld.frustumCulled=false;this.gMat=new THREE.MeshStandardMaterial({color:0x393836,roughness:1});
+  // 바닥 층(지면 0, 공원 .03, 인도 .04, 차도 .06 m)은 높이 차가 몇 cm라 먼 거리에서 깊이가 겹쳐 줄무늬가 생긴다. 위층일수록 깊이를 앞당긴다
+  for(const[m,k]of[[this.pMat,1],[this.wMat,2],[this.sMat,3]]){m.polygonOffset=true;m.polygonOffsetFactor=-k;m.polygonOffsetUnits=-2*k}
   const chain=s.river,wid=360,L=[],Rr=[];for(let i=0;i<chain.length;i++){const a=chain[Math.max(0,i-1)],b=chain[Math.min(chain.length-1,i+1)],dx=b[0]-a[0],dz=b[1]-a[1],l=Math.hypot(dx,dz)||1,nx=dz/l,nz=-dx/l;L.push([chain[i][0]+nx*wid/2,chain[i][1]+nz*wid/2]);Rr.push([chain[i][0]-nx*wid/2,chain[i][1]-nz*wid/2])}
   const westBank=(L[0][0]<Rr[0][0]?L:Rr),eastBank=(L[0][0]<Rr[0][0]?Rr:L);this.west=westBank;this.east=eastBank;const F=7000;
   const mk=(bank,far)=>{const top=bank[0],bot=bank.at(-1);const pts=[...bank.map(p=>new THREE.Vector2(p[0],-p[1])),new THREE.Vector2(bot[0],-(bot[1]+F)),new THREE.Vector2(far,-(bot[1]+F)),new THREE.Vector2(far,-(top[1]-F)),new THREE.Vector2(top[0],-(top[1]-F))];const g=new THREE.ShapeGeometry(new THREE.Shape(pts));g.rotateX(-Math.PI/2);return g};
