@@ -19,9 +19,11 @@ export function bldMaterial(){return new THREE.ShaderMaterial({uniforms:{uFog:{v
  // 한 픽셀이 무늬 한 주기보다 넓게 덮으면 무늬를 평균(.5)으로 녹인다. 먼 지붕과 벽의 자글거림을 막는다
  float nf(vec2 p){vec2 w=fwidth(p);return mix(n(p),.5,smoothstep(.25,.9,w.x+w.y));}
  void main(){vec3 N=normalize(vN);float lam=max(dot(N,uSunDir),0.);float sky=.55+.45*N.y;vec3 c;
- if(vR>.5){c=mix(vec3(.05,.05,.055),vec3(.11,.1,.09),nf(vU*.15));c=mix(c,vec3(.86,.89,.93),uSnow*smoothstep(.2,.7,nf(vU*.4)+.4));c*=uSky*6.+uSun*lam*1.2;}
+ // 낮은 채도의 건물색(황토, 회녹, 벽돌, 연청, 크림). 건물마다 하나를 골라 벽과 지붕에 함께 입힌다(색은 연출)
+ float ci=floor(fract(vS*7.31)*5.);vec3 tint=ci<1.?vec3(1.16,1.,.76):ci<2.?vec3(.88,1.06,.88):ci<3.?vec3(1.18,.86,.76):ci<4.?vec3(.86,.96,1.15):vec3(1.08,1.05,.92);
+ if(vR>.5){c=mix(vec3(.05,.05,.055),vec3(.11,.1,.09),nf(vU*.15))*tint*tint;c=mix(c,vec3(.86,.89,.93),uSnow*smoothstep(.2,.7,nf(vU*.4)+.4));c*=uSky*6.+uSun*lam*1.2;}
  else{float mx=3.5+vS*.9,my=3.25;vec2 g=vec2(vU.x/mx,vU.y/my);vec2 cell=floor(g),f=fract(g);float lod=clamp(vD*.0012,0.,1.);float win=smoothstep(.2,.24,f.x)*smoothstep(.8,.76,f.x)*smoothstep(.24,.28,f.y)*smoothstep(.8,.76,f.y);if(vU.y<3.6)win*=.0;win*=uWin;
- vec3 pl=uBase*mix(vec3(.82,.8,.76),vec3(1.12,1.06,.96),vS);pl*=.72+.42*nf(vec2(vU.x*.08,vU.y*.2+vS*9.));pl*=1.-.3*smoothstep(0.,1.,nf(vec2(vU.x*.7,vU.y*.05)))*(1.-smoothstep(0.,14.,vU.y));pl*=.92+.08*smoothstep(.0,.05,f.y);
+ vec3 pl=uBase*mix(vec3(.82,.8,.76),vec3(1.12,1.06,.96),vS);pl*=tint;pl*=.72+.42*nf(vec2(vU.x*.08,vU.y*.2+vS*9.));pl*=1.-.3*smoothstep(0.,1.,nf(vec2(vU.x*.7,vU.y*.05)))*(1.-smoothstep(0.,14.,vU.y));pl*=.92+.08*smoothstep(.0,.05,f.y);
  pl=mix(pl,pl*.72,step(vU.y,3.4));
  float lit=step(h(cell+vS*31.),uLit);vec3 glass=vec3(.018,.02,.024)+uSky*.5*n(cell*3.);vec3 lamp=mix(vec3(.95,.62,.28),vec3(.8,.75,.55),h(cell+3.))*(.46+.34*h(cell+7.));
  c=(pl*(uSky*5.2*sky+uSun*lam*1.1));vec3 fr=pl*.6;c=mix(c,fr,(1.-win)*0.);c=mix(c,lit>.5?lamp:glass*(1.+uSun*lam*2.),win*(1.-lod*.75));c+=lamp*lit*uWin*lod*.09;
@@ -61,8 +63,11 @@ export class City{
  style(o){const u=this.s.mat.uniforms;for(const k of['fog','sky','sun','base']){if(o[k])u['u'+k[0].toUpperCase()+k.slice(1)].value.set(o[k])}if(o.fogD!=null){u.uFogD.value=o.fogD;this.fogObj.density=o.fogD}if(o.fog)this.fogObj.color.set(o.fog);if(o.lit!=null)u.uLit.value=o.lit;if(o.snow!=null)u.uSnow.value=o.snow;if(o.win!=null)u.uWin.value=o.win;if(o.sunDir)u.uSunDir.value.set(...o.sunDir).normalize();if(o.road)this.sMat.color.set(o.road);if(o.walk)this.wMat.color.set(o.walk);if(o.ground)this.gMat.color.set(o.ground);if(o.park)this.pMat.color.set(o.park);if(o.water)this.rMat.color.set(o.water);if(o.bank){this.bankMat.color.set(o.bank);this.bridgeMat.color.set(o.bank)}}
  sample(list){const o=[];for(const s of list)for(let i=0;i<s.length-1;i++){const a=s[i],b=s[i+1],L=Math.hypot(b[0]-a[0],b[1]-a[1]);const n=Math.max(1,L/32|0);for(let k=0;k<n;k++){const t=k/n;const nx=(b[1]-a[1])/L,nz=-(b[0]-a[0])/L,sd=(k%2?1:-1)*11;o.push([a[0]+(b[0]-a[0])*t+nx*sd,a[1]+(b[1]-a[1])*t+nz*sd])}}return o}
 }
-export class Crowd{ // 길 위를 걷는 실루엣. 얼굴은 없다
- constructor(parent,paths,n=120,{color=0x08080a,spd=1.2,scale=1}={}){const body=new THREE.CapsuleGeometry(.24,1.02,3,8);body.translate(0,.82,0);const head=new THREE.SphereGeometry(.13,10,8);head.translate(0,1.62,0);const g=mergeGeometries([body.toNonIndexed(),head.toNonIndexed()]);this.m=new THREE.InstancedMesh(g,new THREE.MeshStandardMaterial({color,roughness:1}),n);this.m.frustumCulled=false;parent.add(this.m);this.d=new THREE.Object3D();this.a=[];const R=T.rng(9);this.scale=scale;for(let i=0;i<n;i++){const p=paths[R()*paths.length|0];this.a.push({p,i:R()*(p.length-1),off:(R()-.5)*6,s:spd*(.75+R()*.5)*(R()<.5?1:-1),f:.9+R()*.15})}}
+// 낮은 채도의 외투·차 색. 회색조 화면에서도 색이 조금씩 보이게 한다(색은 연출)
+export const COATS=[0x5a4a3c,0x3b4250,0x5a3f48,0x4e5340,0x4a4a4c,0x6b5a45,0x3f4a4a,0x2e2f33];
+export const CARS=[0x8a7f6a,0x6d7a78,0x7a5a4e,0x5f6670,0x9a9580,0x6e6a5a,0x84705c];
+export class Crowd{ // 길 위를 걷는 실루엣. 얼굴은 없다. geo를 주면 차나 전차도 같은 방식으로 길을 따라 움직인다
+ constructor(parent,paths,n=120,{color=0x08080a,spd=1.2,scale=1,palette=null,geo=null,lane=6}={}){let g=geo;if(!g){const body=new THREE.CapsuleGeometry(.24,1.02,3,8);body.translate(0,.82,0);const head=new THREE.SphereGeometry(.13,10,8);head.translate(0,1.62,0);g=mergeGeometries([body.toNonIndexed(),head.toNonIndexed()])}this.m=new THREE.InstancedMesh(g,new THREE.MeshStandardMaterial({color:palette?0xffffff:color,roughness:1}),n);if(palette){const R=T.rng(17),c=new THREE.Color();for(let i=0;i<n;i++)this.m.setColorAt(i,c.setHex(palette[R()*palette.length|0]))}this.lane=lane;this.m.frustumCulled=false;parent.add(this.m);this.d=new THREE.Object3D();this.a=[];const R=T.rng(9);this.scale=scale;for(let i=0;i<n;i++){const p=paths[R()*paths.length|0];this.a.push({p,i:R()*(p.length-1),off:(R()-.5)*lane,s:spd*(.75+R()*.5)*(R()<.5?1:-1),f:.9+R()*.15})}}
  update(dt,t){const{d,m}=this;this.a.forEach((a,k)=>{a.i+=a.s*dt/Math.max(1,this.len(a));if(a.i<0)a.i+=a.p.length-1.01;if(a.i>=a.p.length-1)a.i=0;const j=a.i|0,f=a.i-j,A=a.p[j],B=a.p[j+1]||A;const nx=(B[1]-A[1]),nz=-(B[0]-A[0]),l=Math.hypot(nx,nz)||1;d.position.set(A[0]+(B[0]-A[0])*f+nx/l*a.off,0,A[1]+(B[1]-A[1])*f+nz/l*a.off);d.rotation.y=Math.atan2(B[0]-A[0],B[1]-A[1])+(a.s<0?Math.PI:0);d.scale.setScalar(a.f*this.scale);d.position.y=Math.abs(Math.sin(t*5+k))*.03;d.updateMatrix();m.setMatrixAt(k,d.matrix)});m.instanceMatrix.needsUpdate=true}
  len(a){const j=a.i|0,A=a.p[j],B=a.p[j+1]||A;return Math.hypot(B[0]-A[0],B[1]-A[1])||1}
 }

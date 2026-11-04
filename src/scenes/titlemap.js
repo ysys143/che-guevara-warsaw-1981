@@ -4,6 +4,7 @@ import {LineSegments2} from 'three/examples/jsm/lines/LineSegments2.js';
 import {LineSegmentsGeometry} from 'three/examples/jsm/lines/LineSegmentsGeometry.js';
 import {LineMaterial} from 'three/examples/jsm/lines/LineMaterial.js';
 import {getCity} from './shared.js';
+import {Crowd,COATS,CARS} from '../core/city.js';
 import {tag} from './mwindow.js';
 import {PLACES} from '../data/places.js';
 
@@ -49,10 +50,10 @@ function tileLayer(s,e,ct){
 export async function titleMap(c,{onSelect,area,focus}={}){const{e,hud}=c;const city=await getCity(c),d=city.data;const s=new THREE.Scene();s.background=new THREE.Color(0x0a0c0f);s.add(city.g);s.fog=city.fogObj;s.add(new THREE.HemisphereLight(0xd9dfe8,0x55544e,3.4));
  city.style({fog:0x10131a,fogD:.00007,sky:[.1,.108,.12],sun:[0,0,0],lit:.3,snow:.3,road:0x6a6a6e,walk:0x7a7874,ground:0x4a4a4c,park:0x3a4034,water:0x0a1016,bank:0x34332f,win:1});
  const rt=[];for(let i=0;i<d.route.length;i+=2)rt.push(new THREE.Vector3(d.route[i],2.5,d.route[i+1]));const line=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(rt,false,'catmullrom',.01),700,9,5),new THREE.MeshBasicMaterial({color:0xd9462f}));s.add(line);
- const east=city.bridgeLine?.at(-1)||d.anchors.bridgeE;const where=a=>Array.isArray(a)?a:a==='room'?[east[0]+150,east[1]-60]:d.anchors[a];
+ const east=city.bridgeLine?.at(-1)||d.anchors.bridgeE;const where=a=>Array.isArray(a)?a:a==='room'?[east[0]+150,east[1]-60]:a==='booth'?[east[0]+105,east[1]-10]:d.anchors[a];
  const items=[];const lineMats=[];
  for(const P of PLACES){
-  if(P.kind==='scene'||P.kind==='point'){if(P.offmap)continue;const p=where(P.at);if(!p)continue;const big=P.kind==='scene',h=big?60:34;const sp=tag(P.label,'');sp.position.set(p[0],h,p[1]);sp.center.set(.5,0);s.add(sp);const mat=new THREE.MeshBasicMaterial({color:IVORY});const pin=new THREE.Mesh(big?new THREE.CylinderGeometry(4,4,60,6):new THREE.CylinderGeometry(3,3,34,6),mat);pin.position.set(p[0],h/2,p[1]);s.add(pin);items.push({P,type:'pin',sp,pin,mat,h,k:big?1:.78,x:p[0],z:p[1]})}
+  if(P.kind==='scene'||P.kind==='point'||P.kind==='unknown'){if(P.offmap)continue;const p=where(P.at);if(!p)continue;const big=P.kind==='scene',h=big?60:34;const sp=tag(P.label,'');sp.position.set(p[0],h,p[1]);sp.center.set(.5,0);s.add(sp);const mat=new THREE.MeshBasicMaterial({color:IVORY});const pin=new THREE.Mesh(big?new THREE.CylinderGeometry(4,4,60,6):new THREE.CylinderGeometry(3,3,34,6),mat);pin.position.set(p[0],h/2,p[1]);s.add(pin);items.push({P,type:'pin',sp,pin,mat,h,k:big?1:.78,x:p[0],z:p[1]})}
   else if(P.kind==='area'){const p=where(P.at);const m=groundText(P.label,P.id==='vistula'?900:1300);m.position.set(p[0],14,p[1]);s.add(m);items.push({P,type:'area',m,x:p[0],z:p[1]})}
   else if(P.kind==='street'){const pos=[];let sx=0,sz=0,n=0,x0=1e9,x1=-1e9,z0=1e9,z1=-1e9;for(const k of P.street)for(const seg of d.streets[k]||[])for(let i=0;i+3<seg.length;i+=2){pos.push(seg[i],12,seg[i+1],seg[i+2],12,seg[i+3]);sx+=seg[i];sz+=seg[i+1];n++;x0=Math.min(x0,seg[i],seg[i+2]);x1=Math.max(x1,seg[i],seg[i+2]);z0=Math.min(z0,seg[i+1],seg[i+3]);z1=Math.max(z1,seg[i+1],seg[i+3])}
    if(!n)continue;const g=new LineSegmentsGeometry();g.setPositions(pos);const mat=new LineMaterial({color:IVORY,linewidth:3,transparent:true,opacity:.5,depthTest:false});mat.resolution.set(innerWidth,innerHeight);lineMats.push(mat);const ls=new LineSegments2(g,mat);ls.renderOrder=6;ls.visible=false;s.add(ls);
@@ -63,6 +64,17 @@ export async function titleMap(c,{onSelect,area,focus}={}){const{e,hud}=c;const 
  const ct=e.controls;ct.mode='orbit';Object.assign(ct.orbit,{t:new THREE.Vector3(-650,0,-450),yaw:.3,pitch:.95,dist:7000,min:500,max:12000,panDrag:true});ct.onTouch=()=>{fly=null};
  let sel=null,hover=null,fly=null,kind='scene';const v=new THREE.Vector3();const cam=e.camera;const pins=items.filter(q=>q.type==='pin');
  const tiles=tileLayer(s,e,ct);
+ // 거리의 사람과 차. 지도 거리에서도 보이게 키운다. 색은 낮은 채도(연출)
+ const pairs=a=>{const o=[];for(let i=0;i+1<a.length;i+=2)o.push([a[i],a[i+1]]);return o};
+ const walkP=[];for(const k of['Nowy Świat','Krakowskie Przedmieście','Foksal','Chmielna','Świętokrzyska','Mikołaja Kopernika','Tamka','Saska','Francuska'])for(const q of d.streets[k]||[])if(q.length>3)walkP.push(pairs(q));
+ const carP=d.roads.filter(r=>r[0]<=1&&r.length>8).map(r=>pairs(r.slice(2))).filter(p=>p.length>1);
+ const tramP=(d.tram||[]).map(pairs).filter(p=>p.length>3);
+ const movers=[];
+ if(walkP.length)movers.push(new Crowd(s,walkP,900,{palette:COATS.map(c=>c+0x383838),spd:5,scale:7,lane:16}));
+ const boxG=(w,h,l)=>{const g=new THREE.BoxGeometry(w,h,l);g.translate(0,h/2,0);return g};
+ if(carP.length)movers.push(new Crowd(s,carP,160,{palette:CARS.map(c=>c+0x202020),geo:boxG(1.5,1.3,3),spd:40,scale:4,lane:8}));
+ if(tramP.length)movers.push(new Crowd(s,tramP,12,{palette:[0xa4473c,0xa4473c,0xcbbf9c],geo:boxG(2.4,3.2,13.5),spd:30,scale:1.6,lane:0}));
+ {const bp=[];for(let i=0;i+1<d.route.length;i+=2)bp.push([d.route[i],d.route[i+1]]);movers.push(new Crowd(s,[bp],4,{palette:[0xa8483c],geo:boxG(2.5,3,12),spd:35,scale:1.8,lane:4}))}
  const placeCam=()=>{const o=ct.orbit,cp=Math.cos(o.pitch);cam.fov=32;cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();cam.position.set(o.t.x+Math.sin(o.yaw)*cp*o.dist,Math.sin(o.pitch)*o.dist,o.t.z+Math.cos(o.yaw)*cp*o.dist);cam.lookAt(o.t);cam.updateMatrixWorld()};
  const flyTo=(t1,d1,yaw1)=>{const o=ct.orbit;fly={t:t1,dist:d1,k:0,t0:o.t.clone(),d0:o.dist,y0:o.yaw,y1:yaw1??o.yaw}};
  // 장면 핀이 모두 메뉴와 겹치지 않는 빈 영역에 들어오도록 거리와 중심을 맞춘다
@@ -77,7 +89,7 @@ export async function titleMap(c,{onSelect,area,focus}={}){const{e,hud}=c;const 
  // 화면 좌표로 고른다. 핀은 이름표나 기둥, 구역은 글자 둘레, 거리는 보일 때만 선 둘레 10px
  const pick=()=>{const W=innerWidth,H=innerHeight,px=(e.pointer.x+1)/2*W,py=(1-e.pointer.y)/2*H;const lh=H*.0573,lw=H*.09;let best=null,bd=1e9;
   for(const q of items){let dd=1e9;
-   if(q.type==='pin'){const a=scr(q.x,q.h,q.z);if(!a)continue;const g=scr(q.x,0,q.z);const inLabel=Math.abs(px-a[0])<lw*q.k&&py<a[1]+4&&py>a[1]-lh*q.k;const dPin=g&&Math.abs(px-a[0])<22&&py>a[1]-4&&py<g[1]+16;if(inLabel||dPin)dd=Math.abs(px-a[0])+Math.abs(py-a[1])}
+   if(q.type==='pin'){if(!q.pin.visible)continue;const a=scr(q.x,q.h,q.z);if(!a)continue;const g=scr(q.x,0,q.z);const inLabel=Math.abs(px-a[0])<lw*q.k&&py<a[1]+4&&py>a[1]-lh*q.k;const dPin=g&&Math.abs(px-a[0])<22&&py>a[1]-4&&py<g[1]+16;if(inLabel||dPin)dd=Math.abs(px-a[0])+Math.abs(py-a[1])}
    else if(q.type==='area'){const a=scr(q.x,14,q.z);if(a&&Math.abs(px-a[0])<70&&Math.abs(py-a[1])<22)dd=200+Math.abs(px-a[0])}
    else if(q.type==='street'&&q.ls.visible){for(let i=0;i<q.pos.length;i+=6){const a=scr(q.pos[i],12,q.pos[i+2]),b=scr(q.pos[i+3],12,q.pos[i+5]);if(!a||!b)continue;const ax=b[0]-a[0],ay=b[1]-a[1],L2=ax*ax+ay*ay||1;const t=Math.max(0,Math.min(1,((px-a[0])*ax+(py-a[1])*ay)/L2));const dx=a[0]+ax*t-px,dy=a[1]+ay*t-py,dist=Math.hypot(dx,dy);if(dist<10)dd=Math.min(dd,100+dist)}}
    if(dd<bd){bd=dd;best=q}}return best};
@@ -89,11 +101,12 @@ export async function titleMap(c,{onSelect,area,focus}={}){const{e,hud}=c;const 
  const select=(id,{move=true}={})=>{const q=items.find(x=>x.P.id===id)||null;sel=q;paint();if(!q||!move)return;const o=ct.orbit;let tx=q.x,tz=q.z,d1=Math.min(o.dist,innerWidth>920?1800:2600);
   if(q.type==='street'){const[x0,x1,z0,z1]=q.box;tx=(x0+x1)/2;tz=(z0+z1)/2;d1=THREE.MathUtils.clamp(Math.max(x1-x0,z1-z0)*2.2,700,6000)}else if(q.type==='area')d1=Math.max(d1,3200);
   const F=focus?focus():{x:innerWidth/2,y:innerHeight/2},k=d1*Math.tan(16*Math.PI/180)*2/innerHeight,sn=Math.sin(o.yaw),cs=Math.cos(o.yaw),ax=(F.x-innerWidth/2)*k,ay=(innerHeight/2-F.y)*k/Math.max(.35,Math.sin(o.pitch));flyTo(new THREE.Vector3(tx-cs*ax+sn*ay,0,tz+sn*ax+cs*ay),d1)};
- const POST={grain:.012,vig:.26,sat:.72,bloom:.42,exposure:1.15};
+ const POST={grain:.012,vig:.26,sat:.9,bloom:.42,exposure:1.15};
  const sc={scene:s,fov:32,far:18000,near:2,keep:true,ownCursor:true,imagineFn:()=>!!sel?.P.imagined,post:POST,marks:[],panel:[],
   update(dt){const o=ct.orbit;if(fly){fly.k=Math.min(1,fly.k+dt/1.1);const q=fly.k*fly.k*(3-2*fly.k);o.t.lerpVectors(fly.t0,fly.t,q);o.dist=fly.d0+(fly.dist-fly.d0)*q;o.yaw=fly.y0+(fly.y1-fly.y0)*q;if(fly.k>=1)fly=null}o.t.x=THREE.MathUtils.clamp(o.t.x,-4200,4200);o.t.z=THREE.MathUtils.clamp(o.t.z,-4200,4200);
    for(const q of items)if(q.sp){const k=e.camera.position.distanceTo(q.sp.position)*(q.k||1);q.sp.scale.set(k*.14,k*.033,1)}
-   for(const m of lineMats)m.resolution.set(innerWidth,innerHeight);if(kind==='street')for(const q of items)if(q.type==='street')q.sp.visible=q===sel||q===hover||o.dist<3200;
+   for(const m of lineMats)m.resolution.set(innerWidth,innerHeight);for(const q of pins)if(q.P.kind==='unknown'){const v=kind==='unknown'||q===sel||q===hover||o.dist<2500;q.sp.visible=v;q.pin.visible=v}if(kind==='street')for(const q of items)if(q.type==='street')q.sp.visible=q===sel||q===hover||o.dist<3200;
+   const tt=performance.now()/1000,far=o.dist>4500;for(const[i,m]of movers.entries()){const v=!(i===0&&far);m.m.visible=v;if(v)m.update(dt,tt)}
    tiles.update();
    if(e.pointerSeen){const h=pick();if(h!==hover){hover=h;paint()}e.canvas.style.cursor=h?'pointer':''}},
   onClick(){const q=pick();if(q){select(q.P.id);onSelect?.(q.P.id)}}};
@@ -103,4 +116,4 @@ export async function titleMap(c,{onSelect,area,focus}={}){const{e,hud}=c;const 
   // 원문이 가리키는 지점의 위경도. 바르샤바 밖은 ll, 지도 위 항목은 핀·이름표 좌표로 역변환한다
   latlon(id){const P=PLACES.find(x=>x.id===id);if(!P||P.nolink)return null;if(P.ll)return P.ll;const q=items.find(x=>x.P.id===id);return q?toLL(q.x,q.z):null},
   overlay:{get on(){return tiles.on},set(v){tiles.set(v);e.post(v?{...POST,sat:1,bloom:.12}:POST)},opacity:a=>tiles.opacity(a),stats:()=>tiles.stats()},
-  async leave(){ct.onTouch=null;ct.orbit.panDrag=false;e.canvas.style.cursor='';await hud.fade(true,c.auto?.02:.9);c.dispose();tiles.dispose();s.remove(city.g);hud.imagine(false)}}}
+  async leave(){ct.onTouch=null;ct.orbit.panDrag=false;e.canvas.style.cursor='';await hud.fade(true,c.auto?.02:.9);c.dispose();tiles.dispose();for(const m of movers){m.m.geometry.dispose();m.m.material.dispose();m.m.dispose()}s.remove(city.g);hud.imagine(false)}}}

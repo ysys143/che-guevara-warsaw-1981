@@ -31,17 +31,20 @@ async function boot(){const ch=params.get('ch');if(ch&&CH.some(x=>x[0]===ch)){hu
  const enter=async st=>{audio.start();await hud.fade(true,.5);location.search='?stage='+st+'&only=1&map=1'};
  // 바르샤바 도심에서 본 방향과 거리(바르샤바 밖 항목)
  const far=P=>{if(!P.ll)return '';const[la,lo]=P.ll,dy=(la-52.2297)*110.574,dx=(lo-21.0122)*111.32*Math.cos(52.23*Math.PI/180),dir=['북','북동','동','남동','남','남서','서','북서'][Math.round(((Math.atan2(dx,dy)*180/Math.PI+360)%360)/45)%8];return `바르샤바에서 ${dir}쪽 약 ${Math.round(Math.hypot(dx,dy)/10)*10} km`};
- const sub=P=>P.kind==='far'?far(P)||P.pl:P.kind==='unknown'?'지도에 점을 찍지 않음':P.scenes?P.scenes.map(s=>s[1]).join(' · ')+(P.offmap?' · 지도 밖':''):(P.now?'현재 '+P.now.replace(/ \(.*/,''):P.pl);
+ const sub=P=>P.kind==='far'?far(P)||P.pl:P.kind==='unknown'?(P.g==='C'?'추정':'상상으로 채운 지점'):P.scenes?P.scenes.map(s=>s[1]).join(' · ')+(P.offmap?' · 지도 밖':''):(P.now?'현재 '+P.now.replace(/ \(.*/,''):P.pl);
  const renderList=()=>{if(kind==='names'){list.innerHTML=NAME_KINDS.map(([k,n])=>`<li class="nk"><h3>${n}</h3><dl>${NAMES.filter(x=>x.kind===k).map(x=>`<dt>${esc(x.n)}</dt><dd>${esc(x.d)} <small>${esc(x.p.join(' '))}</small></dd>`).join('')}</dl></li>`).join('');list.classList.add('nm');return}
   list.classList.remove('nm');list.innerHTML=PLACES.filter(P=>P.kind===kind).map(P=>`<li><button class="pl" data-id="${P.id}"><b>${esc(P.name)}</b><small>${esc(sub(P))}</small></button></li>`).join('');
-  for(const b of list.querySelectorAll('.pl'))b.onclick=()=>{opener=b;const id=b.dataset.id;const P=PLACES.find(x=>x.id===id);if(P.offmap||P.kind==='far'||P.kind==='unknown')map?.clear();else map?.select(id);show(id)}};
+  for(const b of list.querySelectorAll('.pl'))b.onclick=()=>{opener=b;const id=b.dataset.id;const P=PLACES.find(x=>x.id===id);if(P.offmap||P.kind==='far')map?.clear();else map?.select(id);show(id)}};
  for(const tb of T.querySelectorAll('.tabs button'))tb.onclick=()=>{kind=tb.dataset.k;for(const x of T.querySelectorAll('.tabs button'))x.setAttribute('aria-selected',x===tb);closeCard();renderList();map?.showKind(kind)};
  const show=id=>{const P=PLACES.find(x=>x.id===id);if(!P)return;if(P.kind!==kind&&!(kind==='names')){kind=P.kind;for(const x of T.querySelectorAll('.tabs button'))x.setAttribute('aria-selected',x.dataset.k===kind);renderList();map?.showKind(kind)}mark(id);card.innerHTML=`<button class="x" aria-label="닫기">닫기</button><p class="gr"><span class="tag"></span><span class="gl"></span></p><h2 id="card-h" tabindex="-1"></h2><p class="plname"></p><p class="desc"></p><div class="qs"></div><p class="note"></p><p class="gm"></p><div class="row"></div>`;
   card.querySelector('.tag').textContent=P.g;card.querySelector('.gl').textContent=GR[P.g]||'';card.querySelector('h2').textContent=P.name;card.querySelector('.plname').textContent=P.pl+(P.now?' · 현재 '+P.now:'')+(P.offmap?' · 지도 밖':'')+(P.kind==='far'&&P.ll?' · '+far(P):'');card.querySelector('.desc').textContent=P.desc;
   const qs=card.querySelector('.qs');for(const[q,ref]of P.q){const d=document.createElement('blockquote');d.innerHTML='<span></span><small></small>';d.firstChild.textContent=q;d.lastChild.textContent=ref;qs.appendChild(d)}
   const nt=card.querySelector('.note');if(P.note)nt.textContent=P.note;else nt.remove();
-  // 구글 지도 링크는 원문이 가리키는 지점의 좌표로만 건다. 이름 검색은 그 장소라는 보장이 없어 쓰지 않는다
-  const gm=card.querySelector('.gm'),ll=P.kind==='unknown'?null:map?.latlon(id);if(ll){const a=document.createElement('a');a.href=`https://www.google.com/maps/search/?api=1&query=${ll[0].toFixed(5)},${ll[1].toFixed(5)}`;a.target='_blank';a.rel='noopener';a.textContent='구글 지도에서 보기'+(P.g==='C'?' · 추정 위치':P.kind==='street'?' · 거리 가운데':P.kind==='area'?' · 이름표 위치':P.kind==='far'?' · 도심':'')+' ↗';gm.appendChild(a)}else gm.textContent=P.nolink||(P.kind==='unknown'?'원문에 지점이 없어 지도 링크를 달지 않습니다.':'');if(!gm.textContent&&!ll)gm.remove();
+  // 구글 지도 링크: 오늘도 있는 장소는 실제 장소 이름(gq)으로, 원문 지점이 오늘의 장소와 다르거나 추정·상상인 곳은 좌표로 건다
+  const gm=card.querySelector('.gm');const link=(href,txt)=>{const a=document.createElement('a');a.href=href;a.target='_blank';a.rel='noopener';a.textContent=txt+' ↗';gm.appendChild(a);gm.appendChild(document.createTextNode(' '))};
+  const GQ=q=>`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+  if(P.gq)link(GQ(P.gq),'구글 지도에서 보기');else{const ll=P.nolink?null:map?.latlon(id);if(ll)link(GQ(ll[0].toFixed(5)+','+ll[1].toFixed(5)),'구글 지도에서 보기'+(P.g==='C'||P.g.startsWith('D')||P.kind==='unknown'?' · 추정 위치':''))}
+  if(P.gq2)link(GQ(P.gq2[1]),P.gq2[0]);if(!gm.childNodes.length){if(P.nolink)gm.textContent=P.nolink;else gm.remove()}
   const row=card.querySelector('.row');for(const[st,n]of P.scenes||[]){const b=document.createElement('button');b.className='enter';b.textContent=`장면 보기 · ${n}`;b.onclick=()=>enter(st);row.appendChild(b)}
   card.querySelector('.x').onclick=closeCard;card.hidden=false;T.classList.add('carded');if(opener)card.querySelector('h2').focus()};
  renderList();
